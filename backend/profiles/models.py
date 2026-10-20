@@ -15,6 +15,12 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         related_name="matrimonial_profile",
     )
+    tenant = models.ForeignKey(
+        "accounts.Tenant",
+        on_delete=models.PROTECT,
+        related_name="profiles",
+
+    )
     full_name = models.CharField(max_length=150)
     date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(
@@ -22,6 +28,7 @@ class Profile(models.Model):
         choices=GENDER_CHOICES,
         blank=True,
     )
+
     city = models.CharField(max_length=100, blank=True)
     education = models.CharField(max_length=150, blank=True)
     profession = models.CharField(max_length=150, blank=True)
@@ -29,7 +36,7 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    
+
     def clean(self):
         super().clean()
 
@@ -47,6 +54,14 @@ class Preferences(models.Model):
         on_delete=models.CASCADE,
         related_name="partner_preferences",
     )
+
+    tenant = models.ForeignKey(
+        "accounts.Tenant",
+        on_delete=models.PROTECT,
+        related_name="preferences",
+
+    )
+
     min_age = models.PositiveSmallIntegerField(default=21)
     max_age = models.PositiveSmallIntegerField(default=30)
     preferred_city = models.CharField(max_length=100, blank=True)
@@ -54,7 +69,7 @@ class Preferences(models.Model):
     preferred_profession = models.CharField(max_length=150, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def clean(self):
         super().clean()
 
@@ -62,7 +77,7 @@ class Preferences(models.Model):
             raise ValidationError({
                 "max_age": "Maximum age must be greater than or equal to minimum age."
             })
-            
+
     def __str__(self):
         return f"Preferences for {self.user.username}"
 
@@ -73,10 +88,11 @@ class ProfilePhoto(models.Model):
         on_delete=models.CASCADE,
         related_name="photos",
     )
+
     image_url = models.URLField(max_length=500)
     is_primary = models.BooleanField(default=False)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-   
+
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -120,7 +136,7 @@ class Match(models.Model):
                 name="unique_sender_receiver_match",
             ),
         ]
-    
+
     def clean(self):
         super().clean()
 

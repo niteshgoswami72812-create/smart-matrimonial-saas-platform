@@ -10,7 +10,7 @@ class UserProfile(models.Model):
     ]
 
     user = models.OneToOneField(
-        User,
+        User,       
         on_delete=models.CASCADE,
         related_name="user_profile",
     )
