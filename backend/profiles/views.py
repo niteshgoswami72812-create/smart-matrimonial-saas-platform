@@ -83,3 +83,84 @@ def create_preferences(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET", "PATCH"])
+@permission_classes([IsAuthenticated])
+def my_profile_detail(request):
+    tenant = get_user_tenant(request.user)
+
+    if tenant is None:
+        return Response(
+            {"error": "Super Admin does not have an end-user profile here."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    try:
+        profile = Profile.objects.get(
+            user=request.user,
+            tenant=tenant,
+        )
+    except Profile.DoesNotExist:
+        return Response(
+            {"error": "Profile not found. Please create your profile first."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    if request.method == "GET":
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+
+    serializer = ProfileSerializer(
+        profile,
+        data=request.data,
+        partial=True,
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST,
+    )
+@api_view(["GET", "PATCH"])
+@permission_classes([IsAuthenticated])
+def my_preferences_detail(request):
+    tenant = get_user_tenant(request.user)
+
+    if tenant is None:
+        return Response(
+            {"error": "Super Admin does not have end-user preferences here."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    try:
+        preferences = Preferences.objects.get(
+            user=request.user,
+            tenant=tenant,
+        )
+    except Preferences.DoesNotExist:
+        return Response(
+            {"error": "Preferences not found. Please create preferences first."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    if request.method == "GET":
+        serializer = PreferencesSerializer(preferences)
+        return Response(serializer.data)
+
+    serializer = PreferencesSerializer(
+        preferences,
+        data=request.data,
+        partial=True,
+    )
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(
+        serializer.errors,
+        status=status.HTTP_400_BAD_REQUEST,
+    )
