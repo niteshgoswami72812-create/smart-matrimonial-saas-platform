@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Preferences
-
+from .models import Profile, Preferences, Match
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,3 +29,32 @@ class PreferencesSerializer(serializers.ModelSerializer):
             })
 
         return attrs
+class MatchSerializer(serializers.ModelSerializer):
+    sender_name = serializers.CharField(
+        source="sender.full_name",
+        read_only=True,
+    )
+    receiver_name = serializers.CharField(
+        source="receiver.full_name",
+        read_only=True,
+    )
+
+    class Meta:
+        model = Match
+        fields = [
+            "id",
+            "sender",
+            "sender_name",
+            "receiver",
+            "receiver_name",
+            "status",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = [
+            "id",
+            "sender",
+            "status",
+            "created_at",
+            "updated_at",
+        ]
