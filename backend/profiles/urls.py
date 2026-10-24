@@ -1,3 +1,4 @@
+
 from django.urls import path
 from .views import (
     my_profile,
@@ -9,6 +10,7 @@ from .views import (
     send_match_request,
     list_matches,
     update_match_status,
+    calculate_profile_compatibility,
 )
 
 urlpatterns = [
@@ -47,5 +49,12 @@ urlpatterns = [
         "matches/<int:match_id>/status/",
         update_match_status,
         name="update-match-status",
+    ),
+
+    # Stage 17: Compatibility Score
+    path(
+        "compatibility/<int:profile_id>/",
+        calculate_profile_compatibility,
+        name="calculate-profile-compatibility",
     ),
 ]

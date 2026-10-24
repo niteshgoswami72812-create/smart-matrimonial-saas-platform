@@ -6,12 +6,139 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from accounts.tenant_utils import get_user_tenant
-from .models import Profile, Preferences, Match
+from .models import Profile, Preferences, Match, CompatibilityScore
 from .serializers import (
     ProfileSerializer,
     PreferencesSerializer,
     MatchSerializer,
 )
+from datetime import date
+from decimal import Decimal
+
+def calculate_compatibility_score(profile, preferences):
+    """Calculate compatibility score out of 100 using saved preferences."""
+    today = date.today()
+    criteria = []
+
+    # 1. Age preference — 40%
+    if profile.date_of_birth:
+        age = (
+            today.year
+            - profile.date_of_birth.year
+            - (
+                (today.month, today.day)
+                < (
+                    profile.date_of_birth.month,
+                    profile.date_of_birth.day,
+                )
+            )
+        )
+        criteria.append((
+            40,
+            preferences.min_age <= age <= preferences.max_age,
+        ))
+
+    # 2. City preference — 25%
+    if preferences.preferred_city.strip():
+        criteria.append((
+            25,
+            profile.city.strip().casefold()
+            == preferences.preferred_city.strip().casefold(),
+        ))
+
+    # 3. Education preference — 20%
+    if preferences.preferred_education.strip():
+        criteria.append((
+            20,
+            profile.education.strip().casefold()
+            == preferences.preferred_education.strip().casefold(),
+        ))
+
+    # 4. Profession preference — 15%
+    if preferences.preferred_profession.strip():
+        criteria.append((
+            15,
+            profile.profession.strip().casefold()
+            == preferences.preferred_profession.strip().casefold(),
+        ))
+
+    if not criteria:
+        return 0.00
+
+    available_weight = sum(weight for weight, _ in criteria)
+    matched_weight = sum(
+        weight for weight, matched in criteria if matched
+    )
+
+    return round((matched_weight / available_weight) * 100, 2)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def calculate_profile_compatibility(request, profile_id):
+    tenant = get_user_tenant(request.user)
+
+    if tenant is None:
+        return Response(
+            {"error": "Super Admin cannot calculate end-user compatibility here."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    try:
+        current_profile = Profile.objects.get(
+            user=request.user,
+            tenant=tenant,
+        )
+    except Profile.DoesNotExist:
+        return Response(
+            {"error": "Create your profile before calculating compatibility."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    try:
+        target_profile = Profile.objects.get(
+            id=profile_id,
+            tenant=tenant,
+        )
+    except (Profile.DoesNotExist, ValueError, TypeError):
+        return Response(
+            {"error": "Target profile not found in your tenant."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    if current_profile.id == target_profile.id:
+        return Response(
+            {"error": "You cannot calculate compatibility with your own profile."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    try:
+        preferences = Preferences.objects.get(
+            user=request.user,
+            tenant=tenant,
+        )
+    except Preferences.DoesNotExist:
+        return Response(
+            {"error": "Create your preferences before calculating compatibility."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    score = calculate_compatibility_score(target_profile, preferences)
+
+    compatibility, _ = CompatibilityScore.objects.update_or_create(
+        profile_one=current_profile,
+        profile_two=target_profile,
+        defaults={"score": Decimal(str(score))},
+    )
+
+    return Response(
+        {
+            "profile_id": target_profile.id,
+            "profile_name": target_profile.full_name,
+            "compatibility_score": str(compatibility.score),
+            "calculated_at": compatibility.calculated_at,
+        },
+        status=status.HTTP_200_OK,
+    )
 
 
 @api_view(["GET"])
