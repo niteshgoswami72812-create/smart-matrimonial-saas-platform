@@ -11,6 +11,7 @@ from .views import (
     list_matches,
     update_match_status,
     calculate_profile_compatibility,
+    generate_profile_match_explanation,
 )
 
 urlpatterns = [
@@ -57,4 +58,10 @@ urlpatterns = [
         calculate_profile_compatibility,
         name="calculate-profile-compatibility",
     ),
+    # Stage 18: AI Match Explanation
+     path(
+         "match-explanation/<int:profile_id>/",
+         generate_profile_match_explanation,
+         name="generate-profile-match-explanation"
+         ),
 ]

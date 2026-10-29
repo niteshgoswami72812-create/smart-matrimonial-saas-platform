@@ -177,3 +177,20 @@ class CompatibilityScore(models.Model):
             f"{self.profile_one.full_name} - "
             f"{self.profile_two.full_name}: {self.score}%"
         )
+
+class AIMatchExplanation(models.Model):
+    compatibility = models.OneToOneField(
+        CompatibilityScore,
+        on_delete=models.CASCADE,
+        related_name="ai_explanation",
+    )
+    summary = models.TextField()
+    reasons = models.JSONField(default=list)
+    generated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return (
+            f"AI Explanation: "
+            f"{self.compatibility.profile_one.full_name} - "
+            f"{self.compatibility.profile_two.full_name}"
+        )
