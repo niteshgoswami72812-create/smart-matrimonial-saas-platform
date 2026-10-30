@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Preferences, Match
+from .models import (Profile,Preferences, Match, AIMatchExplanation,)
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,3 +58,14 @@ class MatchSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+class AIMatchExplanationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AIMatchExplanation
+        fields = [
+            "id",
+            "compatibility",
+            "summary",
+            "reasons",
+            "generated_at",
+        ]
+        read_only_fields = fields
