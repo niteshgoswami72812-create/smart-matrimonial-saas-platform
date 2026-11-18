@@ -24,3 +24,14 @@ frontend/build/
 
 # Editor settings
 .vscode/
+
+/media/
+
+# Backend generated and temporary files
+/backend/media/
+/backend/staticfiles/
+/backend/certs/
+/backend/large_test.jpg
+/backend/check_gemini_api.py
+/backend/create_large_image.py
+/backend/list_gemini_models.py

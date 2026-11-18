@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Backend generated files
+/backend/media/
+/backend/staticfiles/
+/backend/large_test.jpg
+
+# Temporary Gemini testing scripts
+/backend/check_gemini_api.py
+/backend/create_large_image.py
+/backend/list_gemini_models.py

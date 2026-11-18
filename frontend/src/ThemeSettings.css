@@ -1,0 +1,580 @@
+/* Theme selector card */
+.theme-settings-card {
+  margin-top: 22px;
+  padding: 24px;
+  border: 1px solid #eee5e9;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #252333;
+  box-shadow: 0 8px 24px rgba(37, 35, 51, 0.05);
+}
+
+.theme-settings-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.theme-settings-eyebrow {
+  margin: 0 0 7px;
+  color: #d94672;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.theme-settings-heading h2 {
+  margin: 0 0 7px;
+  color: #252333;
+  font-size: 20px;
+}
+
+.theme-settings-heading p:not(.theme-settings-eyebrow) {
+  margin: 0;
+  color: #777482;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.theme-settings-current {
+  flex: 0 0 auto;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #fff0f4;
+  color: #bd315d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.theme-settings-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.theme-settings-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 12px 14px;
+  border: 1px solid #e7e3e8;
+  border-radius: 13px;
+  background: #ffffff;
+  color: #343140;
+  text-align: left;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.theme-settings-option:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: #d94672;
+}
+
+.theme-settings-option.active {
+  border: 2px solid #d94672;
+  background: #fff7f9;
+  padding: 11px 13px;
+}
+
+.theme-settings-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.theme-preview {
+  display: flex;
+  align-items: flex-start;
+  width: 48px;
+  height: 36px;
+  padding: 5px;
+  border: 1px solid #d8d8df;
+  border-radius: 7px;
+}
+
+.theme-preview::before {
+  content: "";
+  display: block;
+  width: 9px;
+  height: 100%;
+  margin-right: 4px;
+  border-radius: 3px;
+  background: #d94672;
+}
+
+.theme-preview > span {
+  display: block;
+  width: 22px;
+  height: 7px;
+  margin-top: 1px;
+  border-radius: 3px;
+}
+
+.theme-preview-light {
+  background: #ffffff;
+}
+
+.theme-preview-light > span {
+  background: #e8e5eb;
+  box-shadow: 0 11px 0 #e8e5eb;
+}
+
+.theme-preview-dark {
+  border-color: #495064;
+  background: #202536;
+}
+
+.theme-preview-dark::before {
+  background: #f0789b;
+}
+
+.theme-preview-dark > span {
+  background: #667085;
+  box-shadow: 0 11px 0 #667085;
+}
+
+.theme-settings-option-label {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.theme-settings-check {
+  color: #d94672;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.theme-settings-help {
+  margin: 14px 0 0;
+  color: #777482;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Dashboard dark theme. App.jsx sets data-theme on the html element. */
+html[data-theme="dark"] .dashboard-layout {
+  min-height: 100vh;
+  background: #111522 !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-sidebar {
+  background: #171d2b !important;
+  border-color: #2b3446 !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-main {
+  background: #111522 !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-header {
+  background: #111522 !important;
+  border-color: #2b3446 !important;
+}
+
+html[data-theme="dark"] .dashboard-welcome,
+html[data-theme="dark"] .dashboard-section,
+html[data-theme="dark"] .dashboard-profile,
+html[data-theme="dark"] .dashboard-card,
+html[data-theme="dark"] .completion-panel,
+html[data-theme="dark"] .photo-upload-panel,
+html[data-theme="dark"] .profile-editor,
+html[data-theme="dark"] .match-card,
+html[data-theme="dark"] .matches-empty,
+html[data-theme="dark"] .matches-discover,
+html[data-theme="dark"] .matches-existing,
+html[data-theme="dark"] .profile-access-note,
+html[data-theme="dark"] .settings-card,
+html[data-theme="dark"] .settings-logout-card,
+html[data-theme="dark"] .settings-confirm-modal,
+html[data-theme="dark"] .theme-settings-card {
+  background: #1a2232 !important;
+  border-color: #303b50 !important;
+  color: #eef1f7 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+html[data-theme="dark"] .settings-card.settings-danger-card {
+  background: #2b1d29 !important;
+  border-color: #613447 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout h1,
+html[data-theme="dark"] .dashboard-layout h2,
+html[data-theme="dark"] .dashboard-layout h3,
+html[data-theme="dark"] .dashboard-layout h4,
+html[data-theme="dark"] .dashboard-layout strong,
+html[data-theme="dark"] .dashboard-layout label,
+html[data-theme="dark"] .dashboard-layout .nav-item,
+html[data-theme="dark"] .dashboard-layout .settings-card-heading,
+html[data-theme="dark"] .dashboard-layout .settings-detail,
+html[data-theme="dark"] .dashboard-layout .settings-option {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout p,
+html[data-theme="dark"] .dashboard-layout small,
+html[data-theme="dark"] .dashboard-layout .dashboard-eyebrow,
+html[data-theme="dark"] .dashboard-layout .profile-subtitle,
+html[data-theme="dark"] .dashboard-layout .match-date,
+html[data-theme="dark"] .dashboard-layout .match-help-text,
+html[data-theme="dark"] .dashboard-layout .sidebar-label,
+html[data-theme="dark"] .dashboard-layout .dashboard-footer,
+html[data-theme="dark"] .dashboard-layout .settings-subtitle,
+html[data-theme="dark"] .dashboard-layout .settings-note,
+html[data-theme="dark"] .dashboard-layout .settings-intro {
+  color: #aeb8ca !important;
+}
+
+html[data-theme="dark"] .dashboard-layout input,
+html[data-theme="dark"] .dashboard-layout select,
+html[data-theme="dark"] .dashboard-layout textarea {
+  background: #121a29 !important;
+  border-color: #3a465c !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout input::placeholder,
+html[data-theme="dark"] .dashboard-layout textarea::placeholder {
+  color: #8995aa !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .nav-item {
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .nav-item.active {
+  background: #342638 !important;
+  color: #ff9ab5 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .profile-secondary,
+html[data-theme="dark"] .dashboard-layout .settings-cancel-button {
+  background: #263247 !important;
+  border-color: #46536b !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .theme-settings-heading h2,
+html[data-theme="dark"] .dashboard-layout .theme-settings-option-label {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .theme-settings-heading p:not(.theme-settings-eyebrow),
+html[data-theme="dark"] .dashboard-layout .theme-settings-help {
+  color: #aeb8ca !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .theme-settings-current {
+  background: #3b2635 !important;
+  color: #ff9ab5 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .theme-settings-option {
+  background: #121a29 !important;
+  border-color: #3a465c !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .theme-settings-option.active {
+  background: #342638 !important;
+  border-color: #e46b91 !important;
+}
+
+@media (max-width: 640px) {
+  .theme-settings-card {
+    padding: 18px;
+  }
+
+  .theme-settings-heading {
+    flex-direction: column;
+  }
+
+  .theme-settings-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================
+   DARK THEME: COMPATIBILITY SECTION
+===================================== */
+
+html[data-theme="dark"] .dashboard-layout .compatibility-page {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-summary-card,
+html[data-theme="dark"] .dashboard-layout .compatibility-overview,
+html[data-theme="dark"] .dashboard-layout .compatibility-profile-card,
+html[data-theme="dark"] .dashboard-layout .compatibility-state,
+html[data-theme="dark"] .dashboard-layout .compatibility-info-card {
+  background: #1a2232 !important;
+  border: 1px solid #303b50 !important;
+  color: #eef1f7 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-page h2,
+html[data-theme="dark"] .dashboard-layout .compatibility-page h3,
+html[data-theme="dark"] .dashboard-layout .compatibility-page h4,
+html[data-theme="dark"] .dashboard-layout .compatibility-profile-info h3,
+html[data-theme="dark"] .dashboard-layout .compatibility-score-number,
+html[data-theme="dark"] .dashboard-layout .compatibility-factor strong {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-page p,
+html[data-theme="dark"] .dashboard-layout .compatibility-profile-info p,
+html[data-theme="dark"] .dashboard-layout .compatibility-score-caption,
+html[data-theme="dark"] .dashboard-layout .compatibility-calculated-date,
+html[data-theme="dark"] .dashboard-layout .compatibility-factor span {
+  color: #aeb8ca !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-eyebrow,
+html[data-theme="dark"] .dashboard-layout .compatibility-score-number {
+  color: #ff91b0 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-summary-icon,
+html[data-theme="dark"] .dashboard-layout .compatibility-overview-icon,
+html[data-theme="dark"] .dashboard-layout .compatibility-profile-avatar,
+html[data-theme="dark"] .dashboard-layout .compatibility-state-icon,
+html[data-theme="dark"] .dashboard-layout .compatibility-info-icon {
+  background: #392638 !important;
+  color: #ff9bb8 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-count {
+  background: #392638 !important;
+  color: #ff9bb8 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-progress-track {
+  background: #3a3544 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-progress-fill {
+  background: linear-gradient(90deg, #ed8aa4, #d74773) !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-breakdown,
+html[data-theme="dark"] .dashboard-layout .compatibility-explanation {
+  background: #24212d !important;
+  border-color: #393341 !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-unavailable {
+  background: #39232d !important;
+  color: #ffb3c4 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-primary-button {
+  background: #d74773 !important;
+  color: #ffffff !important;
+  border-color: #d74773 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-refresh-button {
+  background: #263247 !important;
+  color: #eef1f7 !important;
+  border: 1px solid #46536b !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-primary-button:hover {
+  background: #bd315d !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .compatibility-refresh-button:hover {
+  background: #34445e !important;
+}
+
+/* =====================================
+   DARK THEME: SETTINGS SECTION
+===================================== */
+
+html[data-theme="dark"] .dashboard-layout .settings-page {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-intro h2,
+html[data-theme="dark"] .dashboard-layout .settings-card-heading h3,
+html[data-theme="dark"] .dashboard-layout .settings-logout-card h3,
+html[data-theme="dark"] .dashboard-layout .settings-confirm-modal h3,
+html[data-theme="dark"] .dashboard-layout .settings-danger-content strong {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-card-heading p,
+html[data-theme="dark"] .dashboard-layout .settings-logout-card p,
+html[data-theme="dark"] .dashboard-layout .settings-danger-content p,
+html[data-theme="dark"] .dashboard-layout .settings-note,
+html[data-theme="dark"] .dashboard-layout .settings-subtitle,
+html[data-theme="dark"] .dashboard-layout .settings-option small,
+html[data-theme="dark"] .dashboard-layout .settings-info-message {
+  color: #aeb8ca !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-card,
+html[data-theme="dark"] .dashboard-layout .settings-logout-card,
+html[data-theme="dark"] .dashboard-layout .settings-confirm-modal {
+  background: #1a2232 !important;
+  border: 1px solid #303b50 !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-card.settings-danger-card {
+  background: #2b1d29 !important;
+  border-color: #613447 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-detail,
+html[data-theme="dark"] .dashboard-layout .settings-option {
+  background: #24212d !important;
+  border-color: #393341 !important;
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-detail span,
+html[data-theme="dark"] .dashboard-layout .settings-detail strong,
+html[data-theme="dark"] .dashboard-layout .settings-option strong,
+html[data-theme="dark"] .dashboard-layout .settings-field {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-icon,
+html[data-theme="dark"] .dashboard-layout .settings-profile-icon {
+  background: #392638 !important;
+  color: #ff9bb8 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-danger-icon {
+  background: #49262b !important;
+  color: #ffaaaa !important;
+}
+
+/* Settings inputs */
+html[data-theme="dark"] .dashboard-layout .settings-field input {
+  background: #121a29 !important;
+  color: #eef1f7 !important;
+  border: 1px solid #46536b !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-field input::placeholder {
+  color: #8995aa !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-option input[type="checkbox"] {
+  accent-color: #e46b91;
+}
+
+/* Settings buttons */
+html[data-theme="dark"] .dashboard-layout .settings-primary-button {
+  background: #d74773 !important;
+  color: #ffffff !important;
+  border-color: #d74773 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-delete-button {
+  background: #572832 !important;
+  color: #ffb4b4 !important;
+  border: 1px solid #874451 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-logout-button {
+  background: #392638 !important;
+  color: #ff9bb8 !important;
+  border: 1px solid #704052 !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-cancel-button {
+  background: #263247 !important;
+  color: #eef1f7 !important;
+  border: 1px solid #46536b !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-primary-button:hover {
+  background: #bd315d !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-delete-button:hover {
+  background: #71323e !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-logout-button:hover {
+  background: #4b3045 !important;
+}
+
+/* Settings messages */
+html[data-theme="dark"] .dashboard-layout .settings-success {
+  background: #203d2b !important;
+  border-color: #356647 !important;
+  color: #a9edbd !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-error {
+  background: #49262b !important;
+  border-color: #75404a !important;
+  color: #ffaaaa !important;
+}
+
+/* Delete confirmation modal */
+html[data-theme="dark"] .dashboard-layout .settings-confirm-icon {
+  background: #49262b !important;
+  color: #ffaaaa !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-modal-overlay {
+  background: rgba(0, 0, 0, 0.78) !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-confirm-modal p {
+  color: #aeb8ca !important;
+}
+
+html[data-theme="dark"] .dashboard-layout .settings-primary-button:disabled,
+html[data-theme="dark"] .dashboard-layout .settings-delete-button:disabled,
+html[data-theme="dark"] .dashboard-layout .settings-logout-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* Fix: Compatibility page background in dark mode */
+html[data-theme="dark"] .dashboard-main .compatibility-page {
+  background: #111522 !important;
+  color: #eef1f7 !important;
+  min-height: 100vh;
+}
+
+/* Compatibility section cards */
+html[data-theme="dark"] .dashboard-main .compatibility-page .compatibility-summary-card,
+html[data-theme="dark"] .dashboard-main .compatibility-page .compatibility-overview,
+html[data-theme="dark"] .dashboard-main .compatibility-page .compatibility-profile-card,
+html[data-theme="dark"] .dashboard-main .compatibility-page .compatibility-state,
+html[data-theme="dark"] .dashboard-main .compatibility-page .compatibility-info-card,
+html[data-theme="dark"] .dashboard-main .compatibility-page .compatibility-breakdown,
+html[data-theme="dark"] .dashboard-main .compatibility-page .compatibility-explanation {
+  background: #1c2434 !important;
+  border-color: #354157 !important;
+  color: #eef1f7 !important;
+}
+
+/* Compatibility text */
+html[data-theme="dark"] .dashboard-main .compatibility-page h2,
+html[data-theme="dark"] .dashboard-main .compatibility-page h3,
+html[data-theme="dark"] .dashboard-main .compatibility-page h4,
+html[data-theme="dark"] .dashboard-main .compatibility-page strong {
+  color: #eef1f7 !important;
+}
+
+html[data-theme="dark"] .dashboard-main .compatibility-page p,
+html[data-theme="dark"] .dashboard-main .compatibility-page span {
+  color: #b5bfd0;
+}
