@@ -330,9 +330,9 @@ function Chat({
       }
     };
 
-    socket.onerror = () => {
-      setCallError("Unable to connect to calling server.");
-    };
+    // socket.onerror = () => {
+    //   setCallError("Unable to connect to calling server.");
+    // };
 
     socket.onclose = (event) => {
       setWsReady(false);
@@ -798,9 +798,9 @@ function Chat({
             📹 Video Call
           </button> */}
 
-          <span className={`call-connection-status ${wsReady ? "connected" : ""}`}>
+          {/* <span className={`call-connection-status ${wsReady ? "connected" : ""}`}>
             {wsReady ? "Calling ready" : "Connecting..."}
-          </span>
+          </span> */}
         </div>
 
         {incomingCall && callStatus === "incoming" && (
