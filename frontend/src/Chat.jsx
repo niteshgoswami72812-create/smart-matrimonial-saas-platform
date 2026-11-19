@@ -780,23 +780,23 @@ function Chat({
         </header>
 
         <div className="call-toolbar">
-          <button
+          {/* <button
             type="button"
             onClick={() => startCall("audio")}
             disabled={!wsReady || callStatus !== "idle"}
             className="call-button audio-call-button"
           >
             📞 Audio Call
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             type="button"
             onClick={() => startCall("video")}
             disabled={!wsReady || callStatus !== "idle"}
             className="call-button video-call-button"
           >
             📹 Video Call
-          </button>
+          </button> */}
 
           <span className={`call-connection-status ${wsReady ? "connected" : ""}`}>
             {wsReady ? "Calling ready" : "Connecting..."}
