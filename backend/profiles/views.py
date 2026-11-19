@@ -1644,6 +1644,7 @@ def upload_photo_post(request):
     )
 
 
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def photo_posts_feed(request):
@@ -1670,23 +1671,33 @@ def photo_posts_feed(request):
             status=status.HTTP_404_NOT_FOUND,
         )
 
-    # Include own profile and profiles with accepted matches only.
+    # Get all profile IDs belonging to the current tenant.
+    tenant_profile_ids = list(
+        Profile.objects.filter(
+            tenant=tenant
+        ).values_list("id", flat=True)
+    )
+
+    # Get accepted matches without tenant JOINs.
     accepted_matches = Match.objects.filter(
-        Q(sender=profile) | Q(receiver=profile),
+        Q(sender_id=profile.id) | Q(receiver_id=profile.id),
         status="accepted",
-        sender__tenant=tenant,
-        receiver__tenant=tenant,
+        sender_id__in=tenant_profile_ids,
+        receiver_id__in=tenant_profile_ids,
     ).values_list(
         "sender_id",
         "receiver_id",
     )
 
+    # Always include the current user's own profile.
     allowed_profile_ids = {profile.id}
 
+    # Include profiles with accepted matches only.
     for sender_id, receiver_id in accepted_matches:
         allowed_profile_ids.add(sender_id)
         allowed_profile_ids.add(receiver_id)
 
+    # Fetch posts only from allowed profiles in this tenant.
     posts = PhotoPost.objects.filter(
         profile_id__in=allowed_profile_ids,
         profile__tenant=tenant,
