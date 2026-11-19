@@ -380,8 +380,6 @@ def update_profile_last_seen(profile_id, tenant_id):
 
 class PresenceConsumer(AsyncJsonWebsocketConsumer):
 
-    # Local single-process connection registry.
-    # Production multi-worker setup should use shared Redis presence.
 
     active_connections = {}
 
