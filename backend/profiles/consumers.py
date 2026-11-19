@@ -45,16 +45,14 @@ def get_call_connection_details(user, target_profile_id):
 
     accepted_match = Match.objects.filter(
         Q(
-            sender=current_profile,
-            receiver=target_profile,
+            sender_id=current_profile.id,
+            receiver_id=target_profile.id,
         )
         | Q(
-            sender=target_profile,
-            receiver=current_profile,
+            sender_id=target_profile.id,
+            receiver_id=current_profile.id,
         ),
         status="accepted",
-        sender__tenant=tenant,
-        receiver__tenant=tenant,
     ).exists()
 
     if not accepted_match:
@@ -219,8 +217,8 @@ class CallConsumer(AsyncJsonWebsocketConsumer):
 # ONLINE / OFFLINE PRESENCE SYSTEM
 # =========================================================
 
-def _get_presence_details(user):
 
+def _get_presence_details(user):
     if not user or not user.is_authenticated:
         return None
 
@@ -237,13 +235,21 @@ def _get_presence_details(user):
     if not current_profile:
         return None
 
-    # Only accepted matches from the same tenant.
+    # Get profile IDs belonging to the current tenant.
+    tenant_profile_ids = list(
+        Profile.objects.filter(
+            tenant_id=tenant.id
+        ).values_list("id", flat=True)
+    )
+
+    # Get accepted matches using direct foreign-key IDs.
+    # This avoids tenant relation joins on the Match table.
     match_rows = Match.objects.filter(
         Q(sender_id=current_profile.id)
         | Q(receiver_id=current_profile.id),
         status="accepted",
-        sender__tenant_id=tenant.id,
-        receiver__tenant_id=tenant.id,
+        sender_id__in=tenant_profile_ids,
+        receiver_id__in=tenant_profile_ids,
     ).values_list("sender_id", "receiver_id")
 
     matched_ids = set()
@@ -669,16 +675,14 @@ def _get_chat_connection_details(user, target_profile_id):
 
     accepted_match = Match.objects.filter(
         Q(
-            sender=current_profile,
-            receiver=target_profile,
+            sender_id=current_profile.id,
+            receiver_id=target_profile.id,
         )
         | Q(
-            sender=target_profile,
-            receiver=current_profile,
+            sender_id=target_profile.id,
+            receiver_id=current_profile.id,
         ),
         status="accepted",
-        sender__tenant=tenant,
-        receiver__tenant=tenant,
     ).exists()
 
     if not accepted_match:
